@@ -6,7 +6,7 @@ body,html{
   }  
 .body{
     background: linear-gradient(to top left, #0099ff -4%, #99ffcc 100%) no-repeat ;
-    height: 90%;
+    height: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -121,6 +121,10 @@ body,html{
 }
 .p{
     font-size: 35px; 
+}
+a{
+    text-decoration: none;
+
 }
 .p1{
     color: #0099ff;
