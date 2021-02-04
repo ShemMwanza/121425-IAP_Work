@@ -1,6 +1,12 @@
 <?php
-
-class User 
+Interface Account 
+{
+    public function register ($pdo);
+    public function login($pdo);
+    public function changePassword($pdo);
+    public function logout ($pdo);
+}
+class User implements Account 
 {
     //properties
     protected $email; 
@@ -99,7 +105,7 @@ class User
     {            
         try 
         {   
-            session_start();             
+                       
             $stmt = $pdo->prepare("SELECT Password FROM users WHERE Email=?");                
             $stmt->execute([$this->email]);                
             $row = $stmt->fetch();              
@@ -109,9 +115,12 @@ class User
             }                
             if (password_verify($this->password,$row['Password']))
             { 
-                $_SESSION["User"] = $this->email;
                 
-                echo '<script>location.href="ChangePassword.php"</script>';               
+           
+                echo '<script>location.href="IndexPage.php"</script>';
+                
+                
+                               
             } 
             else
             {               
@@ -171,6 +180,10 @@ class User
         {            	
             return $e->getMessage();            
         }                    
+    }
+    public function logout ($pdo)
+    {
+
     }   
 }
 
