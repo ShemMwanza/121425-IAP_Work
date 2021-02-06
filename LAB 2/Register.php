@@ -13,7 +13,7 @@
     <div class="Register-box">
         <h1>Register</h1>
 
-        <form action="index.php" method="POST">
+        <form action="processRegister.php" method="POST">
             <div class="form">
         <h2>Full name</h2>
         <input type="text" name="fullName" id="input" placeholder="John Doe" >
