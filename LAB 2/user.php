@@ -16,12 +16,26 @@ class User implements Account
     protected $password1;
     protected $password2;
     protected $_SESSION;  
-    //class constructor   
-    function __construct($user, $pass)
+    
+    //email setter
+    public function setEmail ($email)
+    {
+        $this->email = $email;
+    }
+    //email getter
+    public function getEmail ()
     {    
-        $this->email =$user; 
-        $this->password = $pass;
-
+        return $this->email;   
+    }
+    //password setter
+    public function setPassword ($password)
+    {
+        $this->password = $password;
+    }
+    //password getter
+    public function getPassword ()
+    {    
+        return $this->password;   
     }
     //full name setter
     public function setFullName ($name)
@@ -84,11 +98,11 @@ class User implements Account
     */ 
     public function register ($pdo)
     {
-        $passwordHash = password_hash($this->password,PASSWORD_DEFAULT);
+        $passwordHash = password_hash($this->getPassword(),PASSWORD_DEFAULT);
         try 
         {
             $stmt = $pdo->prepare ('INSERT INTO users (Fullname,Email,Password,CityofResidence,ProfilePhoto) VALUES(?,?,?,?,?)');
-            $stmt->execute([$this->getFullName(),$this->email,$passwordHash,$this->getCityofResidence(),$this->getImage()]);
+            $stmt->execute([$this->getFullName(),$this->getEmail(),$passwordHash,$this->getCityofResidence(),$this->getImage()]);
             return "Registration was successiful";
         } 
         catch (PDOException $e) 
@@ -105,26 +119,25 @@ class User implements Account
     {            
         try 
         {   
-            session_start();             
+                         
             $stmt = $pdo->prepare("SELECT Password FROM users WHERE Email=?");                
-            $stmt->execute([$this->email]);                
+            $stmt->execute([$this->getEmail()]);                
             $row = $stmt->fetch();              
             if($row == null)
-            {                	
-                return "This account does not exist";                
+            {    
+                echo '<script>alert("Account does not exist")</script>';            	
+                echo '<script>window.location.href="Login.php"</script>';                
             }                
-            if (password_verify($this->password,$row['Password']))
+            if (password_verify($this->getPassword(),$row['Password']))
             { 
-                $_SESSION["User"] = $this->email;
-                $_SESSION["Name"] = $this->getFullName();
-                echo '<script>location.href="IndexPage.php"</script>';
                 
-                
+                echo '<script>window.location.href="ChangePassword.php"</script>';  
                                
             } 
             else
-            {               
-            return "Your username or password is not correct";
+            { 
+                echo '<script>alert("Email or password is not correct")</script>';              
+                echo '<script>window.location.href="Login.php"</script>';
             } 
         } 
         catch (PDOException $e) 
@@ -138,26 +151,27 @@ class User implements Account
     public function changePassword ($pdo)
     {
        try 
-        {               
-            $stmt = $pdo->prepare("SELECT Password FROM users where Email = ?");
-            $stmt->execute([$this->email]);                 
+        {
+            include_once 'processLogin.php';               
+            $stmt = $pdo->prepare("SELECT Password FROM users where Email = '".$_SESSION["email"]."'");
+            $stmt->execute();                 
             $row = $stmt->fetch();              
-            if(empty($this->email) || empty($this->password) || empty($this->getPass1()) || empty($this->getPass2()))
+            if(empty($this->getPassword()) || empty($this->getPass1()) || empty($this->getPass2()))
             {
                   echo '<script>alert("Fill in the blanks")</script>';
                   echo '<script>location.href="ChangePassword.php"</script>';
             }
-            if($this->password1 != $this->password2)
+            if($this->getPass1() != $this->getPass2())
             {
                 echo '<script>alert("New passwords do not match!")</script>'; 
             }   
-            if (password_verify($this->password,$row['Password']))
+            if (password_verify($this->getPassword(),$row['Password']))
             {   
                 $passwordHash1 = password_hash($this->getPass1(),PASSWORD_DEFAULT);
                 try 
                 {
-                    $stmt1 = $pdo->prepare ("UPDATE users set Password = '".$passwordHash1."' where Email = ?");
-                    $stmt1->execute([$this->email]);
+                    $stmt1 = $pdo->prepare ("UPDATE users set Password = '".$passwordHash1."' where Email = '".$_SESSION["email"]."'");
+                    $stmt1->execute();
                     
                     echo '<script>alert("Password changed successsfully!!")</script>';
                     echo '<script>location.href="ChangePassword.php"</script>';
