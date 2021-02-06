@@ -4,6 +4,7 @@
 <head>
     <title>Login Page</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
 </head>
 
 <body>
@@ -18,20 +19,21 @@
             
             <br>
 
-            <form action="index.php" method="POST">
+            <form action="processLogin.php" method="POST" >
                 <div class="form1">
 
                     <h2>Email</h2>
-                    <input type="text" name="email" id="input" placeholder="johndoe@example.com">
+                    <input class="email" type="text" name="email" id="input" placeholder="johndoe@example.com">
                     <br><br>
                     <h2>Password</h2>
-                    <input type="password" name="password" id="input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;">
+                    <input class="password" type="password" name="password" id="input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;">
 
                     <br>
 
-                    <button class="Signbtn" type="submit" name="Login">LOGIN</button>
+                    <button id="login" class="Signbtn" type="submit" name="Login">LOGIN</button>
                     <br>
                     <a href="Register.php"><p class="p1">Don't have an account?Register here</p></a>
+                    
                 </div>
             </form>
 
@@ -39,6 +41,7 @@
 
         </div>
     </div>
+    
 </body>
 
 </html>
