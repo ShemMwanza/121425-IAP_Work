@@ -24,10 +24,10 @@
             
             <br>
 
-            <form action="index.php" method="POST">
+            <form action="processChangePassword.php" method="POST">
                 <div class="form1">
-                <h2>Email</h2>
-                    <input type="email" name="email" id="input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;">
+                <!-- <h2>Email</h2>
+                    <input type="email" name="email" id="input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"> -->
 
                     <h2>Current Password</h2>
                     <input type="password" name="password" id="input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;">
