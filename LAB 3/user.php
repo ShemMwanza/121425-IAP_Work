@@ -165,10 +165,7 @@ class User implements Account
     {
        try 
         {
-            if(empty($this->getEmail()) || empty($this->getPassword()) || empty($this->getPass1()) || empty($this->getPass2())){
-                return "Fill in all the blanks!";
-            }
-            elseif($this->getPass1() != $this->getPass2()){
+            if($this->getPass1() != $this->getPass2()){
                 return "New Passwords do not match!!";
             } 
             else{
