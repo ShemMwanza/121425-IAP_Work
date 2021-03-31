@@ -10,10 +10,12 @@
     $("#formOrder").submit(function (event) {
         event.preventDefault();
         var foodName = $("input[name = 'foodName']").val();
+        var foodQ =$("input[name = 'foodQ']").val();
         
         $.post("processOrder.php", {
             
-            foodName: foodName
+            foodName: foodName,
+            foodQ: foodQ
         },
             function (data, status) {
                 $("#Message").html(data);
@@ -40,12 +42,15 @@
 
   <form action="processOrder.php" method="POST" id="formOrder">
   <br>
+  <div class="orderForm">
   <input type="text" placeholder="Enter food name" id="foodName" name="foodName">
-  <br>
+  <input type="text" placeholder="Enter quantity, eg 2" id="foodQ" name="foodQ">
   <br>
   <br>
   <button class="order" name="order" type="submit" >Order</button>
   <p id="Message" style='color:red; margin-left: 39px;'></p>
+  </div>
+  
   </form>
 
   <script>
